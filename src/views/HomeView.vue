@@ -1,15 +1,19 @@
 <template>
-  <main >
+  <main>
     <NavBar />
+    <LogsTable />
   </main>
 </template>
 
 <script>
 import NavBar from '../components/NavBar.vue'
+import LogsTable from '../components/LogsTable.vue'
+
 
 export default {
   components: {
-    NavBar
+    NavBar,
+    LogsTable
   }
 }
 </script>

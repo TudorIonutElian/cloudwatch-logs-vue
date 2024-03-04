@@ -1,12 +1,14 @@
 <template>
-  <main >
+  <main>
     <NavBar />
     <div>
       <h1>Donuts</h1>
       <p>
-        Donuts are a type of fried dough confection or dessert food. The doughnut is popular in many countries and prepared in various forms as a sweet snack that can be homemade or purchased in bakeries, supermarkets, food stalls, and franchised specialty vendors.
+        Donuts are a type of fried dough confection or dessert food. The doughnut is popular in many
+        countries and prepared in various forms as a sweet snack that can be homemade or purchased
+        in bakeries, supermarkets, food stalls, and franchised specialty vendors.
       </p>
-      </div>
+    </div>
   </main>
 </template>
 
