@@ -34,20 +34,15 @@
         </tr>
       </tbody>
     </table>
-    <div v-if="loaded">
-      <RequestType />
-    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import RequestType from './chart/RequestType.vue';
 
 export default {
   name: 'LogsTable',
   components: {
-    RequestType
   },
   data: () => {
     return {
@@ -72,6 +67,7 @@ export default {
         const numberOfPostRequests = body.filter(log => log.requestType === 'POST').length;
         this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
         this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
+        this.$store.commit('setLoaded', true);
 
         this.loaded = true;
       });
