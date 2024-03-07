@@ -4,7 +4,8 @@ const store =  createStore({
     state: {
         logs: [],
         numberOfGetRequests: 0,
-        numberOfPostRequests: 0
+        numberOfPostRequests: 0,
+        loaded: false
     },
     mutations: {
         setLogs: function (state, logs) {
@@ -15,6 +16,9 @@ const store =  createStore({
         },
         setNumberOfPostRequests: function (state, numberOfPostRequests) {
             state.numberOfPostRequests =  numberOfPostRequests;
+        },
+        setLoaded: function (state, loaded) {
+            state.loaded = loaded;
         }
     },
     actions: {
@@ -29,6 +33,9 @@ const store =  createStore({
         },
         getNumberOfPostRequests: function (state) {
             return state.numberOfPostRequests;
+        },
+        getLoaded: function (state) {
+            return state.loaded;
         }
     }
 });

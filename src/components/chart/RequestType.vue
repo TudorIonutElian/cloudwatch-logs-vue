@@ -3,6 +3,7 @@
     id="my-chart-id"
     :options="chartOptions"
     :data="chartData"
+    :isResponsive="false"
   />
 </template>
 
@@ -23,16 +24,17 @@ export default {
       },
       chartData: {
         labels: [ 'GET', 'POST'],
+        title: 'Requests',
         datasets: [ 
           {
             label: 'GET/POST requests',
-            backgroundColor: ["#f87979"],
+            backgroundColor: ['#41B883', '#E46651'],
             data: [this.getNumberOfGetRequests(), this.getNumberOfPostRequests()]
           } 
         ],
       },
       chartOptions: {
-        responsive: false
+        responsive: true
       }
     }
   },
