@@ -25,6 +25,7 @@
                 placeholder="#"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.id"
               />
             </div>
           </th>
@@ -36,6 +37,7 @@
                 placeholder="requestType"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestType"
               />
             </div>
           </th>
@@ -47,6 +49,7 @@
                 placeholder="requestUrl"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestUrl"
               />
             </div>
           </th>
@@ -58,6 +61,7 @@
                 placeholder="requestIp"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestIp"
               />
             </div>
           </th>
@@ -69,6 +73,7 @@
                 placeholder="requestVpc"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestVpc"
               />
             </div>
           </th>
@@ -80,6 +85,7 @@
                 placeholder="requestRegion"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestRegion"
               />
             </div>
           </th>
@@ -91,6 +97,7 @@
                 placeholder="requestAvailabilityZone"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestAvailabilityZone"
               />
             </div>
           </th>
@@ -102,6 +109,7 @@
                 placeholder="requestIamRole"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestIamRole"
               />
             </div>
           </th>
@@ -113,6 +121,7 @@
                 placeholder="requestApiKey"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestApiKey"
               />
             </div>
           </th>
@@ -124,6 +133,7 @@
                 placeholder="requestUsername"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestUsername"
               />
             </div>
           </th>
@@ -135,6 +145,7 @@
                 placeholder="requestAuthorizationPolicy"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestAuthorizationPolicy"
               />
             </div>
           </th>
@@ -146,6 +157,7 @@
                 placeholder="requestScanned"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                v-model="filters.requestScanned"
               />
             </div>
           </th>
@@ -179,7 +191,21 @@ export default {
   components: {},
   data: () => {
     return {
-      loaded: false
+      loaded: false,
+      filters: {
+        id: '',
+        requestType: '',
+        requestUrl: '',
+        requestIp: '',
+        requestVpc: '',
+        requestRegion: '',
+        requestAvailabilityZone: '',
+        requestIamRole: '',
+        requestApiKey: '',
+        requestUsername: '',
+        requestAuthorizationPolicy: '',
+        requestScanned: ''
+      }
     }
   },
   computed: {
