@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-darken">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Logs</a>
@@ -43,3 +43,9 @@ export default {
   name: 'NavBar'
 }
 </script>
+
+<style scoped>
+.bg-darken {
+  background-color: #343a40;
+}
+</style>

@@ -1,47 +1,62 @@
 <template>
   <div class="my-3">
-    <table class="table">
+    <table class="table text-center table-striped table-hover">
       <thead class="thead-dark bg-dark">
-        <tr>
+        <tr class="bg-darken">
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">requestType</th>
+          <th scope="col">requestUrl</th>
+          <th scope="col">requestIp</th>
+          <th scope="col">requestVpc</th>
+          <th scope="col">requestRegion</th>
+          <th scope="col">requestAvailabilityZone</th>
+          <th scope="col">requestIamRole</th>
+          <th scope="col">requestApiKey</th>
+          <th scope="col">requestUsername</th>
+          <th scope="col">requestAuthorizationPolicy</th>
+          <th scope="col">requestScanned</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
+        <tr v-for="logs in this.logs" v-bind:key="logs.id">
+          <th scope="row">{{logs.id}}</th>
+          <td>{{ logs.requestType }}</td>
+          <td>{{ logs.requestUrl }}</td>
+          <td>{{ logs.requestIp }}</td>
+          <td>{{ logs.requestVpc }}</td>
+          <td>{{ logs.requestRegion }}</td>
+          <td>{{ logs.requestAvailabilityZone }}</td>
+          <td>{{ logs.requestIamRole }}</td>
+          <td>{{ logs.requestApiKey }}</td>
+          <td>{{ logs.requestUsername }}</td>
+          <td>{{ evaluateBoolean(logs.requestAuthorizationPolicy) }}</td>
+          <td>{{ evaluateBoolean(logs.requestScanned) }}</td>
         </tr>
       </tbody>
     </table>
+    <div v-if="loaded">
+      <RequestType />
+    </div>
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue'
 import axios from 'axios';
+import RequestType from './chart/RequestType.vue';
 
 export default {
   name: 'LogsTable',
+  components: {
+    RequestType
+  },
   data: () => {
     return {
-      logs: []
+      loaded: false
+    }
+  },
+  computed: {
+    logs() {
+      return this.$store.state.logs;
     }
   },
   created() {
@@ -49,9 +64,27 @@ export default {
   },
   methods: {
     async fetchLogs() {
-        const response = await axios.post('https://i79w0r2zib.execute-api.eu-central-1.amazonaws.com/development/logs');
-        this.logs = response.data;
+      await axios.post('https://i79w0r2zib.execute-api.eu-central-1.amazonaws.com/development/logs').then((response) => {
+        const data = response.data;
+        const body = JSON.parse(data.body);
+        this.$store.commit('setLogs', body);
+        const numberOfGetRequests = body.filter(log => log.requestType === 'GET').length;
+        const numberOfPostRequests = body.filter(log => log.requestType === 'POST').length;
+        this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
+        this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
+
+        this.loaded = true;
+      });
+    },
+    evaluateBoolean(value) {
+      return value ? 'true' : 'false';
     }
   },
 }
 </script>
+
+<style scoped>
+.bg-darken {
+  background-color: #343a40!important;
+}
+</style>
