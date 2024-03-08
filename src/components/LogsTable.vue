@@ -2,6 +2,7 @@
   <div class="my-3 mx-3">
     <div class="mb-2">
       <button type="button" class="btn btn-danger" @click="resetFilters">Reset filters</button>
+      <button type="button" class="btn btn-primary mx-2" @click="fetchLogs">Update logs</button>
     </div>
     <table class="table text-center table-striped table-hover">
       <thead class="thead-dark bg-dark">
