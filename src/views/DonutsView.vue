@@ -23,7 +23,6 @@ import NavBar from '../components/NavBar.vue'
 import RequestType from '../components/chart/RequestType.vue';
 import DonutType from '../components/chart/DonutType.vue';
 import axios from 'axios';
-import DonutTypeVue from '../components/chart/DonutType.vue';
 
 export default {
   components: {
@@ -52,8 +51,10 @@ export default {
         this.$store.commit('setLogs', body);
         const numberOfGetRequests = body.filter(log => log.requestType === 'GET').length;
         const numberOfPostRequests = body.filter(log => log.requestType === 'POST').length;
+        const numberOfPutRequests = body.filter(log => log.requestType === 'PUT').length;
         this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
         this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
+        this.$store.commit('setNumberOfPutRequests', numberOfPutRequests);
         this.$store.commit('setLoaded', true);
       });
     },

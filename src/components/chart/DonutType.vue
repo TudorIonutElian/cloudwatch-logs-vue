@@ -16,11 +16,15 @@ export default {
     data() {
         return {
             chartData: {
-                labels: ['POST Requests', 'GET Requests'],
+                labels: ['POST Requests', 'GET Requests', 'PUT Requests'],
                 datasets: [
                     {
-                    backgroundColor: ['#41B883', '#E46651'],
-                    data: [this.getNumberOfGetRequests(), this.getNumberOfPostRequests()]
+                      backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+                      data: [
+                        this.getNumberOfGetRequests(), 
+                        this.getNumberOfPostRequests(),
+                        this.getNumberOfPutRequests()
+                      ]
                     }
                 ]
             },
@@ -37,6 +41,9 @@ export default {
     },
     getNumberOfPostRequests() {
       return this.$store.getters.getNumberOfPostRequests;
+    },
+    getNumberOfPutRequests() {
+      return this.$store.getters.getNumberOfPutRequests;
     }
   },
 }

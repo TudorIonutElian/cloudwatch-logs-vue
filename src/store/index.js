@@ -6,6 +6,7 @@ const store =  createStore({
         filteredLogs: [],
         numberOfGetRequests: 0,
         numberOfPostRequests: 0,
+        numberOfPutRequests: 0,
         loaded: false
     },
     mutations: {
@@ -25,6 +26,9 @@ const store =  createStore({
         setNumberOfPostRequests: function (state, numberOfPostRequests) {
             state.numberOfPostRequests =  numberOfPostRequests;
         },
+        setNumberOfPutRequests: function (state, numberOfPutRequests) {
+            state.numberOfPutRequests =  numberOfPutRequests;
+        },
         setLoaded: function (state, loaded) {
             state.loaded = loaded;
         }
@@ -41,6 +45,9 @@ const store =  createStore({
         },
         getNumberOfPostRequests: function (state) {
             return state.numberOfPostRequests;
+        },
+        getNumberOfPutRequests: function (state) {
+            return state.numberOfPutRequests;
         },
         getLoaded: function (state) {
             return state.loaded;

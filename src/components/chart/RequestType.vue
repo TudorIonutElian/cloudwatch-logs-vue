@@ -20,16 +20,21 @@ export default {
     return {
       requests: {
         numberOfGetRequests: 0,
-        numberOfPostRequests: 0
+        numberOfPostRequests: 0,
+        numberOfPutRequests: 0
       },
       chartData: {
-        labels: [ 'GET', 'POST'],
+        labels: [ 'GET', 'POST', 'PUT'],
         title: 'Requests',
         datasets: [ 
           {
-            label: 'GET/POST requests',
-            backgroundColor: ['#41B883', '#E46651'],
-            data: [this.getNumberOfGetRequests(), this.getNumberOfPostRequests()]
+            label: 'GET/POST/PUT requests',
+            backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+            data: [
+              this.getNumberOfGetRequests(), 
+              this.getNumberOfPostRequests(),
+              this.getNumberOfPutRequests()
+            ]
           } 
         ],
       },
@@ -45,6 +50,9 @@ export default {
     },
     getNumberOfPostRequests() {
       return this.$store.getters.getNumberOfPostRequests;
+    },
+    getNumberOfPutRequests() {
+      return this.$store.getters.getNumberOfPutRequests;
     }
   },
   

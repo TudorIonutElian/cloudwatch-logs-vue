@@ -224,10 +224,13 @@ export default {
           const data = response.data
           const body = JSON.parse(data.body)
           this.$store.commit('setLogs', body);
-          const numberOfGetRequests = body.filter((log) => log.requestType === 'GET').length
-          const numberOfPostRequests = body.filter((log) => log.requestType === 'POST').length
-          this.$store.commit('setNumberOfGetRequests', numberOfGetRequests)
-          this.$store.commit('setNumberOfPostRequests', numberOfPostRequests)
+          const numberOfGetRequests = body.filter((log) => log.requestType === 'GET').length;
+          const numberOfPostRequests = body.filter((log) => log.requestType === 'POST').length;
+          const numberOfPutRequests = body.filter((log) => log.requestType === 'PUT').length;
+          
+          this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
+          this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
+          this.$store.commit('setNumberOfPutRequests', numberOfPutRequests);
           this.$store.commit('setLoaded', true)
 
           this.loaded = true

@@ -21,12 +21,6 @@ export default {
     data: () => {
         return {
         }
-    },
-    methods: {
-        
-    },
-    created() {
-        console.log(this.columns);
     }
 }
 </script>
