@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 const store =  createStore({
     state: {
         logs: [],
+        filteredLogs: [],
         numberOfGetRequests: 0,
         numberOfPostRequests: 0,
         loaded: false
@@ -10,6 +11,13 @@ const store =  createStore({
     mutations: {
         setLogs: function (state, logs) {
             state.logs = logs;
+            state.filteredLogs = logs;
+        },
+        resetFilteredLogs: function (state) {
+            state.filteredLogs = state.logs;
+        },
+        setFilteredLogs: function (state, filteredLogs) {
+            state.filteredLogs = filteredLogs;
         },
         setNumberOfGetRequests: function (state, numberOfGetRequests) {
             state.numberOfGetRequests = numberOfGetRequests;

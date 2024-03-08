@@ -1,5 +1,8 @@
 <template>
-  <div class="my-3">
+  <div class="my-3 mx-3">
+    <div class="mb-2">
+      <button type="button" class="btn btn-danger" @click="resetFilters">Reset filters</button>
+    </div>
     <table class="table text-center table-striped table-hover">
       <thead class="thead-dark bg-dark">
         <tr class="bg-darken">
@@ -19,26 +22,16 @@
         <tr class="bg-darken">
           <th scope="col">
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control text-center"
-                placeholder="#"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                v-model="filters.id"
-              />
+              <select class="form-select" aria-label="Default select example" v-model="filters.id" @change="filterById">
+                <option v-for="(requestId, index) in filters.requestIds" :key="index" :value="requestId">{{requestId}}</option>
+              </select>
             </div>
           </th>
           <th scope="col">
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control text-center"
-                placeholder="requestType"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                v-model="filters.requestType"
-              />
+              <select class="form-select" aria-label="Default select example" v-model="filters.requestType" @change="filterByRequestTypes">
+                <option v-for="(requestType, index) in filters.requestTypes" :key="index" :value="requestType">{{requestType}}</option>
+              </select>
             </div>
           </th>
           <th scope="col">
@@ -194,7 +187,9 @@ export default {
       loaded: false,
       filters: {
         id: '',
+        requestIds: [],
         requestType: '',
+        requestTypes: [],
         requestUrl: '',
         requestIp: '',
         requestVpc: '',
@@ -210,7 +205,7 @@ export default {
   },
   computed: {
     logs() {
-      return this.$store.state.logs
+      return this.$store.state.filteredLogs
     }
   },
   created() {
@@ -223,7 +218,7 @@ export default {
         .then((response) => {
           const data = response.data
           const body = JSON.parse(data.body)
-          this.$store.commit('setLogs', body)
+          this.$store.commit('setLogs', body);
           const numberOfGetRequests = body.filter((log) => log.requestType === 'GET').length
           const numberOfPostRequests = body.filter((log) => log.requestType === 'POST').length
           this.$store.commit('setNumberOfGetRequests', numberOfGetRequests)
@@ -231,10 +226,50 @@ export default {
           this.$store.commit('setLoaded', true)
 
           this.loaded = true
+
+          this.setRequestTypeFilters();
+          this.setRequestIds();
         })
+    },
+    resetStoreFilters() {
+      this.$store.commit('resetFilteredLogs');
     },
     evaluateBoolean(value) {
       return value ? 'true' : 'false'
+    },
+    setRequestTypeFilters() {
+      const requestTypes = this.logs.map((log) => log.requestType)
+      const uniqueRequestTypes = [...new Set(requestTypes)]
+      this.filters.requestTypes = uniqueRequestTypes
+    },
+    setRequestIds(listOfIds) {
+      if (listOfIds) {
+        this.filters.requestIds = listOfIds
+      } else {
+        const requestIds = this.logs.map((log) => log.id)
+        const uniqueRequestIds = [...new Set(requestIds)]
+        this.filters.requestIds = uniqueRequestIds
+      }
+      
+    },
+    filterById() {
+      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.id === this.filters.id);
+      this.resetStoreFilters();
+      this.$store.commit('setFilteredLogs', filteredLogs)
+    },
+    filterByRequestTypes() {
+      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.requestType === this.filters.requestType);
+      const requestIds = filteredLogs.map((log) => {
+        if (log.requestType === this.filters.requestType) {
+          return log.id
+        }
+      });
+
+      this.setRequestIds(requestIds);
+      this.$store.commit('setFilteredLogs', filteredLogs)
+    },
+    resetFilters() {
+      this.resetStoreFilters();
     }
   }
 }
