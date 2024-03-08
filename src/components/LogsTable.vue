@@ -5,20 +5,7 @@
     </div>
     <table class="table text-center table-striped table-hover">
       <thead class="thead-dark bg-dark">
-        <tr class="bg-darken">
-          <th scope="col">#</th>
-          <th scope="col">requestType</th>
-          <th scope="col">requestUrl</th>
-          <th scope="col">requestIp</th>
-          <th scope="col">requestVpc</th>
-          <th scope="col">requestRegion</th>
-          <th scope="col">requestAvailabilityZone</th>
-          <th scope="col">requestIamRole</th>
-          <th scope="col">requestApiKey</th>
-          <th scope="col">requestUsername</th>
-          <th scope="col">requestAuthorizationPolicy</th>
-          <th scope="col">requestScanned</th>
-        </tr>
+        <TableRow :columns="tables.rows.headerRow"/>
         <tr class="bg-darken">
           <th scope="col">
             <div class="input-group">
@@ -173,12 +160,33 @@
 
 <script>
 import axios from 'axios'
+import TableRow from './table/TableRow.vue'
 
 export default {
   name: 'LogsTable',
-  components: {},
+  components: {
+    TableRow
+  },
   data: () => {
     return {
+      tables: {
+        rows: {
+          headerRow: [
+            '#',
+            'requestType',
+            'requestUrl',
+            'requestIp',
+            'requestVpc',
+            'requestRegion',
+            'requestAvailabilityZone',
+            'requestIamRole',
+            'requestApiKey',
+            'requestUsername',
+            'requestAuthorizationPolicy',
+            'requestScanned'
+          ]
+        }
+      },
       loaded: false,
       filters: {
         id: '',
