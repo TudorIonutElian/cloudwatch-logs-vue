@@ -71,15 +71,10 @@
             </div>
           </th>
           <th scope="col">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control text-center"
-                placeholder="requestRegion"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                v-model="filters.requestRegion"
-              />
+             <div class="input-group">
+              <select class="form-select" aria-label="Default select example" v-model="filters.requestRegion" @change="filterByRegion">
+                <option v-for="(region, index) in filters.requestRegions" :key="index" :value="region">{{region}}</option>
+              </select>
             </div>
           </th>
           <th scope="col">
@@ -194,6 +189,7 @@ export default {
         requestIp: '',
         requestVpc: '',
         requestRegion: '',
+        requestRegions:[],
         requestAvailabilityZone: '',
         requestIamRole: '',
         requestApiKey: '',
@@ -229,6 +225,7 @@ export default {
 
           this.setRequestTypeFilters();
           this.setRequestIds();
+          this.setRequestRegions();
         })
     },
     resetStoreFilters() {
@@ -250,7 +247,11 @@ export default {
         const uniqueRequestIds = [...new Set(requestIds)]
         this.filters.requestIds = uniqueRequestIds
       }
-      
+    },
+    setRequestRegions() {
+      const requestRegions = this.logs.map((log) => log.requestRegion)
+      const uniqueRequestRegions = [...new Set(requestRegions)]
+      this.filters.requestRegions = uniqueRequestRegions
     },
     filterById() {
       const filteredLogs = this.$store.getters.getLogs.filter((log) => log.id === this.filters.id);
@@ -266,6 +267,10 @@ export default {
       });
 
       this.setRequestIds(requestIds);
+      this.$store.commit('setFilteredLogs', filteredLogs)
+    },
+    filterByRegion() {
+      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.requestRegion === this.filters.requestRegion);
       this.$store.commit('setFilteredLogs', filteredLogs)
     },
     resetFilters() {
