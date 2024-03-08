@@ -4,7 +4,7 @@
       <button type="button" class="btn btn-danger" @click="resetFilters">Reset filters</button>
       <button type="button" class="btn btn-primary mx-2" @click="fetchLogs">Update logs</button>
     </div>
-    <table class="table text-center table-striped table-hover">
+    <table class="table text-center table-striped table-hover my-custom-scrollbar table-wrapper-scroll-y">
       <thead class="thead-dark bg-dark">
         <TableRow :columns="tables.rows.headerRow"/>
         <tr class="bg-darken">
@@ -227,7 +227,7 @@ export default {
           const numberOfGetRequests = body.filter((log) => log.requestType === 'GET').length;
           const numberOfPostRequests = body.filter((log) => log.requestType === 'POST').length;
           const numberOfPutRequests = body.filter((log) => log.requestType === 'PUT').length;
-          
+
           this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
           this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
           this.$store.commit('setNumberOfPutRequests', numberOfPutRequests);
@@ -263,7 +263,7 @@ export default {
     setRequestRegions() {
       const requestRegions = this.logs.map((log) => log.requestRegion)
       const uniqueRequestRegions = [...new Set(requestRegions)]
-      this.filters.requestRegions = uniqueRequestRegions
+      this.filters.requestRegions = uniqueRequestRegions;
     },
     filterById() {
       const filteredLogs = this.$store.getters.getLogs.filter((log) => log.id === this.filters.id);
@@ -283,6 +283,14 @@ export default {
     },
     filterByRegion() {
       const filteredLogs = this.$store.getters.getLogs.filter((log) => log.requestRegion === this.filters.requestRegion);
+
+      console.log('filteredLogs', filteredLogs)
+      const requestIds = filteredLogs.map((log) => {
+        if (log.requestRegion === this.filters.requestRegion) {
+          return log.id
+        }
+      });
+      this.setRequestIds(requestIds);
       this.$store.commit('setFilteredLogs', filteredLogs)
     },
     resetFilters() {
@@ -293,13 +301,21 @@ export default {
 </script>
 
 <style scoped>
-.bg-darken {
-  background-color: #343a40 !important;
-}
-.bordered-hover:hover {
-  border: 1px solid #15e442;
-  border-radius: 0.25rem;
-  transition: all 0.3s;
-  box-sizing: border-box;
-}
+  .bg-darken {
+    background-color: #343a40 !important;
+  }
+  .bordered-hover:hover {
+    border: 1px solid #15e442;
+    border-radius: 0.25rem;
+    transition: all 0.3s;
+    box-sizing: border-box;
+  }
+  .my-custom-scrollbar {
+    position: relative;
+    height: 85vh;
+    overflow: auto;
+  }
+  .table-wrapper-scroll-y {
+    display: block;
+  }
 </style>
