@@ -45,8 +45,7 @@ export default {
   },
   methods: {
     async fetchLogs() {
-      const APIURL = process.env.VUE_APP_API_URL
-      await axios.post(APIURL).then((response) => {
+      await axios.post("https://u2wfyxf9de.execute-api.eu-central-1.amazonaws.com/development/logs").then((response) => {
         const data = response.data;
         const body = JSON.parse(data.body);
         this.$store.commit('setLogs', body);
