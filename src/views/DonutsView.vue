@@ -56,6 +56,8 @@ export default {
         this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
         this.$store.commit('setNumberOfPutRequests', numberOfPutRequests);
         this.$store.commit('setLoaded', true);
+      }).catch((error) => {
+        console.log(error);
       });
     },
   }

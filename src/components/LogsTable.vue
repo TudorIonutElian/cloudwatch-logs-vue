@@ -238,6 +238,8 @@ export default {
           this.setRequestTypeFilters();
           this.setRequestIds();
           this.setRequestRegions();
+        }).catch((error) => {
+          console.log('error', error)
         })
     },
     resetStoreFilters() {
