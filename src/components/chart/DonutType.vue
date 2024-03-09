@@ -35,14 +35,13 @@ export default {
         }
     },
     methods: {
-    getNumberOfGetRequests() {
+    getNumberOfGetRequests() : number {
       return this.$store.getters.getNumberOfGetRequests;
-      
     },
-    getNumberOfPostRequests() {
+    getNumberOfPostRequests() : number {
       return this.$store.getters.getNumberOfPostRequests;
-    },
-    getNumberOfPutRequests() {
+  },
+    getNumberOfPutRequests() : number {
       return this.$store.getters.getNumberOfPutRequests;
     }
   },
