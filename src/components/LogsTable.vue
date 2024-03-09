@@ -218,8 +218,9 @@ export default {
   },
   methods: {
     async fetchLogs() {
+      const APIURL = process.env.VUE_APP_API_URL
       await axios
-        .post('https://i79w0r2zib.execute-api.eu-central-1.amazonaws.com/development/logs')
+        .post(APIURL)
         .then((response) => {
           const data = response.data
           const body = JSON.parse(data.body)
