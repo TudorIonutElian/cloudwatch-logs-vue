@@ -221,12 +221,11 @@ export default {
       await axios
         .post("https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs")
         .then((response) => {
-          const data = response.data
-          const body = JSON.parse(data.body)
-          this.$store.commit('setLogs', body);
-          const numberOfGetRequests = body.filter((log) => log.requestType === 'GET').length;
-          const numberOfPostRequests = body.filter((log) => log.requestType === 'POST').length;
-          const numberOfPutRequests = body.filter((log) => log.requestType === 'PUT').length;
+          const data = response.data;
+          this.$store.commit('setLogs', data);
+          const numberOfGetRequests = data.filter((log) => log.requestType === 'GET').length;
+          const numberOfPostRequests = data.filter((log) => log.requestType === 'POST').length;
+          const numberOfPutRequests = data.filter((log) => log.requestType === 'PUT').length;
 
           this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
           this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
@@ -239,8 +238,8 @@ export default {
           this.setRequestIds();
           this.setRequestRegions();
         }).catch((error) => {
-          console.log('error', error)
-        })
+          console.log(error);
+        });
     },
     resetStoreFilters() {
       this.$store.commit('resetFilteredLogs');
