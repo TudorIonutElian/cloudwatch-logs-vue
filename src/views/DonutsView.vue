@@ -46,14 +46,7 @@ export default {
   methods: {
     async fetchLogs() {
       await axios.post(
-        "https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs",
-          null,
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Content-Type": "application/json",
-            },
-          }
+        "https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs"
         ).then((response) => {
         const data = response.data;
         const body = JSON.parse(data.body);
