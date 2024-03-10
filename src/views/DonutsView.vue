@@ -49,7 +49,9 @@ export default {
         "https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs",
         {},
         {
-          headers: {},
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
         }
         ).then((response) => {
         const data = response.data;
