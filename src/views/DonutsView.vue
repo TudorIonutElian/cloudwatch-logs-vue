@@ -47,12 +47,13 @@ export default {
     async fetchLogs() {
       await axios.post(
         "https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs",
-        {},
-        {
-          headers: {
-            'Access-Control-Allow-Origin': '*'
-          },
-        }
+          {},
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+              "Access-Control-Allow-Credentials": false, // Required for cookies, authorization headers with HTTPS
+            },
+          }
         ).then((response) => {
         const data = response.data;
         const body = JSON.parse(data.body);
