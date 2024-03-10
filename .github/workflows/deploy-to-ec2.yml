@@ -18,12 +18,14 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /var/www/
-            sudo rm -rf cloudwatch-logs-vue /var/www/html/*
+            sudo rm -rf cloudwatch-logs-vue
+            sudo rm -rf /var/www/html/*
             sudo git clone https://github.com/TudorIonutElian/cloudwatch-logs-vue.git
             cd cloudwatch-logs-vue
             sudo npm install
             sudo npm run build
-            sudo mkdir /var/www/html
-            sudo mv dist/* /var/www/html/
+            cd /var/www/
+            sudo mkdir -p html
+            sudo mv /var/www/cloudwatch-logs-vue/dist/* /var/www/html/
             cd ../
             sudo rm -rf cloudwatch-logs-vue
