@@ -1,3 +1,10 @@
+name: Deploy to ec2 instance
+
+# Trigger deployment only on push to main branch
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
     name: Build
