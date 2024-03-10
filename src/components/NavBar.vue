@@ -31,6 +31,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/ips">IPs</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ips">Test Pipeline</a>
+            </li>
           </ul>
         </div>
       </div>
