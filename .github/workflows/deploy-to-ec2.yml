@@ -1,5 +1,5 @@
 jobs:
-    build:
+  build:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -9,7 +9,7 @@ jobs:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+          run: |
             sudo su
             cd /var/www/
             git clone https://github.com/TudorIonutElian/cloudwatch-logs-vue.git
