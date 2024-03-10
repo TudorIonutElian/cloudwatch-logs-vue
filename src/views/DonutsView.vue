@@ -46,7 +46,7 @@ export default {
   methods: {
     async fetchLogs() {
       await axios.post(
-        "https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/staging/logs",
+        "https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs",
           null,
           {
             headers: {
