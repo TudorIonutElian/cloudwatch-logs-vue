@@ -34,7 +34,9 @@ export default {
   name: 'NavBar',
   methods: {
     setComponent(component) {
-      console.log(`Setting component to ${component}`)
+      if (component === 'TableLogs') {
+        window.location.reload();
+      }
       this.$emit('setComponent', component);
     }
   }
