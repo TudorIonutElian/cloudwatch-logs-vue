@@ -7,7 +7,9 @@ const store =  createStore({
         numberOfGetRequests: 0,
         numberOfPostRequests: 0,
         numberOfPutRequests: 0,
-        loaded: false
+        loaded: false,
+        isTableVisible: true,
+        isDonutVisible: false,
     },
     mutations: {
         setLogs: function (state, logs) {
@@ -31,7 +33,13 @@ const store =  createStore({
         },
         setLoaded: function (state, loaded) {
             state.loaded = loaded;
-        }
+        },
+        setIsTableVisible: function (state, isTableVisible) {
+            state.isTableVisible = isTableVisible;
+        },
+        setIsDonutVisible: function (state, isDonutVisible) {
+            state.isDonutVisible = isDonutVisible;
+        },
     },
     actions: {
 
@@ -51,7 +59,13 @@ const store =  createStore({
         },
         getLoaded: function (state) {
             return state.loaded;
-        }
+        },
+        getIsTableVisible: function (state) {
+            return state.isTableVisible;
+        },
+        getIsDonutVisible: function (state) {
+            return state.isDonutVisible;
+        },
     }
 });
 

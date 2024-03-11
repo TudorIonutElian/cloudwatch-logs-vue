@@ -1,24 +1,48 @@
 <template>
-  <div class="my-3 mx-3">
+  <div class="my-3 mx-3" v-show="isTableVisible">
     <div class="mb-2">
       <button type="button" class="btn btn-danger" @click="resetFilters">Reset filters</button>
       <button type="button" class="btn btn-primary mx-2" @click="fetchLogs">Update logs</button>
     </div>
-    <table class="table text-center table-striped table-hover my-custom-scrollbar table-wrapper-scroll-y">
+    <table
+      class="table text-center table-striped table-hover my-custom-scrollbar table-wrapper-scroll-y"
+    >
       <thead class="thead-dark bg-dark">
-        <TableRow :columns="tables.rows.headerRow"/>
+        <TableRow :columns="tables.rows.headerRow" />
         <tr class="bg-darken">
           <th scope="col">
             <div class="input-group">
-              <select class="form-select" aria-label="Default select example" v-model="filters.id" @change="filterById">
-                <option v-for="(requestId, index) in filters.requestIds" :key="index" :value="requestId">{{requestId}}</option>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                v-model="filters.id"
+                @change="filterById"
+              >
+                <option
+                  v-for="(requestId, index) in filters.requestIds"
+                  :key="index"
+                  :value="requestId"
+                >
+                  {{ requestId }}
+                </option>
               </select>
             </div>
           </th>
           <th scope="col">
             <div class="input-group">
-              <select class="form-select" aria-label="Default select example" v-model="filters.requestType" @change="filterByRequestTypes">
-                <option v-for="(requestType, index) in filters.requestTypes" :key="index" :value="requestType">{{requestType}}</option>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                v-model="filters.requestType"
+                @change="filterByRequestTypes"
+              >
+                <option
+                  v-for="(requestType, index) in filters.requestTypes"
+                  :key="index"
+                  :value="requestType"
+                >
+                  {{ requestType }}
+                </option>
               </select>
             </div>
           </th>
@@ -59,9 +83,20 @@
             </div>
           </th>
           <th scope="col">
-             <div class="input-group">
-              <select class="form-select" aria-label="Default select example" v-model="filters.requestRegion" @change="filterByRegion">
-                <option v-for="(region, index) in filters.requestRegions" :key="index" :value="region">{{region}}</option>
+            <div class="input-group">
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                v-model="filters.requestRegion"
+                @change="filterByRegion"
+              >
+                <option
+                  v-for="(region, index) in filters.requestRegions"
+                  :key="index"
+                  :value="region"
+                >
+                  {{ region }}
+                </option>
               </select>
             </div>
           </th>
@@ -157,16 +192,25 @@
       </tbody>
     </table>
   </div>
+  <div v-show="isDonutVisible">
+    <DonutsView />
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import TableRow from './table/TableRow.vue'
+import DonutsView from '../views/DonutsView.vue'
 
 export default {
   name: 'LogsTable',
+  props: {
+    isTableVisible: Boolean,
+    isDonutVisible: Boolean
+  },
   components: {
-    TableRow
+    TableRow,
+    DonutsView
   },
   data: () => {
     return {
@@ -198,7 +242,7 @@ export default {
         requestIp: '',
         requestVpc: '',
         requestRegion: '',
-        requestRegions:[],
+        requestRegions: [],
         requestAvailabilityZone: '',
         requestIamRole: '',
         requestApiKey: '',
@@ -219,30 +263,31 @@ export default {
   methods: {
     async fetchLogs() {
       await axios
-        .post("https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs")
+        .post('https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs')
         .then((response) => {
-          const data = response.data;
-          this.$store.commit('setLogs', data);
-          const numberOfGetRequests = data.filter((log) => log.requestType === 'GET').length;
-          const numberOfPostRequests = data.filter((log) => log.requestType === 'POST').length;
-          const numberOfPutRequests = data.filter((log) => log.requestType === 'PUT').length;
+          const data = response.data
+          this.$store.commit('setLogs', data)
+          const numberOfGetRequests = data.filter((log) => log.requestType === 'GET').length
+          const numberOfPostRequests = data.filter((log) => log.requestType === 'POST').length
+          const numberOfPutRequests = data.filter((log) => log.requestType === 'PUT').length
 
-          this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
-          this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
-          this.$store.commit('setNumberOfPutRequests', numberOfPutRequests);
+          this.$store.commit('setNumberOfGetRequests', numberOfGetRequests)
+          this.$store.commit('setNumberOfPostRequests', numberOfPostRequests)
+          this.$store.commit('setNumberOfPutRequests', numberOfPutRequests)
           this.$store.commit('setLoaded', true)
 
           this.loaded = true
 
-          this.setRequestTypeFilters();
-          this.setRequestIds();
-          this.setRequestRegions();
-        }).catch((error) => {
-          console.log(error);
-        });
+          this.setRequestTypeFilters()
+          this.setRequestIds()
+          this.setRequestRegions()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     resetStoreFilters() {
-      this.$store.commit('resetFilteredLogs');
+      this.$store.commit('resetFilteredLogs')
     },
     evaluateBoolean(value) {
       return value ? 'true' : 'false'
@@ -264,59 +309,63 @@ export default {
     setRequestRegions() {
       const requestRegions = this.logs.map((log) => log.requestRegion)
       const uniqueRequestRegions = [...new Set(requestRegions)]
-      this.filters.requestRegions = uniqueRequestRegions;
+      this.filters.requestRegions = uniqueRequestRegions
     },
     filterById() {
-      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.id === this.filters.id);
-      this.resetStoreFilters();
+      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.id === this.filters.id)
+      this.resetStoreFilters()
       this.$store.commit('setFilteredLogs', filteredLogs)
     },
     filterByRequestTypes() {
-      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.requestType === this.filters.requestType);
+      const filteredLogs = this.$store.getters.getLogs.filter(
+        (log) => log.requestType === this.filters.requestType
+      )
       const requestIds = filteredLogs.map((log) => {
         if (log.requestType === this.filters.requestType) {
           return log.id
         }
-      });
+      })
 
-      this.setRequestIds(requestIds);
+      this.setRequestIds(requestIds)
       this.$store.commit('setFilteredLogs', filteredLogs)
     },
     filterByRegion() {
-      const filteredLogs = this.$store.getters.getLogs.filter((log) => log.requestRegion === this.filters.requestRegion);
+      const filteredLogs = this.$store.getters.getLogs.filter(
+        (log) => log.requestRegion === this.filters.requestRegion
+      )
 
       console.log('filteredLogs', filteredLogs)
       const requestIds = filteredLogs.map((log) => {
         if (log.requestRegion === this.filters.requestRegion) {
           return log.id
         }
-      });
-      this.setRequestIds(requestIds);
+      })
+      this.setRequestIds(requestIds)
       this.$store.commit('setFilteredLogs', filteredLogs)
     },
     resetFilters() {
-      this.resetStoreFilters();
+      this.resetStoreFilters()
     }
   }
 }
 </script>
 
 <style scoped>
-  .bg-darken {
-    background-color: #343a40 !important;
-  }
-  .bordered-hover:hover {
-    border: 1px solid #15e442;
-    border-radius: 0.25rem;
-    transition: all 0.3s;
-    box-sizing: border-box;
-  }
-  .my-custom-scrollbar {
-    position: relative;
-    height: 85vh;
-    overflow: auto;
-  }
-  .table-wrapper-scroll-y {
-    display: block;
-  }
+.bg-darken {
+  background-color: #343a40 !important;
+}
+.bordered-hover:hover {
+  border: 1px solid #15e442;
+  border-radius: 0.25rem;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+.my-custom-scrollbar {
+  position: relative;
+  height: 85vh;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
 </style>
