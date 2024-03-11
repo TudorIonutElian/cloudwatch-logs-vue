@@ -22,6 +22,9 @@
             <li class="nav-item">
               <button class="nav-link" @click="setComponent('Donuts')">Donuts</button>
             </li>
+            <li class="nav-item">
+              <button class="nav-link" @click="setComponent('DonutsRegions')">Donuts Regions</button>
+            </li>
           </ul>
         </div>
       </div>

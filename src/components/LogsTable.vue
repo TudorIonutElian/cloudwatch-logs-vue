@@ -193,24 +193,30 @@
     </table>
   </div>
   <div v-show="isDonutVisible">
-    <DonutsView />
+    <DonutsViewRequests />
+  </div>
+    <div v-show="isDonutRegionsVisible">
+    <DonutsRegions />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import TableRow from './table/TableRow.vue'
-import DonutsView from '../views/DonutsView.vue'
+import DonutsViewRequests from '../views/DonutsViewRequests.vue'
+import DonutsRegions from '../views/DonutsViewRegions.vue'
 
 export default {
   name: 'LogsTable',
   props: {
     isTableVisible: Boolean,
-    isDonutVisible: Boolean
+    isDonutVisible: Boolean,
+    isDonutRegionsVisible: Boolean
   },
   components: {
     TableRow,
-    DonutsView
+    DonutsViewRequests,
+    DonutsRegions
   },
   data: () => {
     return {

@@ -10,6 +10,9 @@ const store =  createStore({
         loaded: false,
         isTableVisible: true,
         isDonutVisible: false,
+        eu_1_region: 0,
+        eu_2_region: 0,
+        eu_other_region: 0,
     },
     mutations: {
         setLogs: function (state, logs) {
@@ -40,6 +43,15 @@ const store =  createStore({
         setIsDonutVisible: function (state, isDonutVisible) {
             state.isDonutVisible = isDonutVisible;
         },
+        setNumbersOfEu1Regions: function (state, eu_1_region) {
+            state.eu_1_region = eu_1_region;
+        },
+        setNumbersOfEu2Regions: function (state, eu_2_region) {
+            state.eu_2_region = eu_2_region;
+        },
+        setNumbersOfEuOtherRegions: function (state, eu_other_region) {
+            state.eu_other_region = eu_other_region;
+        },
     },
     actions: {
 
@@ -65,6 +77,15 @@ const store =  createStore({
         },
         getIsDonutVisible: function (state) {
             return state.isDonutVisible;
+        },
+        getEu1RegionRequest: function (state) {
+            return state.eu_1_region;
+        },
+        getEu2RegionRequest: function (state) {
+            return state.eu_2_region;
+        },
+        getEuOtherRegionRequest: function (state) {
+            return state.eu_other_region;
         },
     }
 });

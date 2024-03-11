@@ -5,12 +5,18 @@
       <div class="row">
         <div class="container">
             <div v-if="isLoaded">
-              <RequestType isResponsive="true"/>
+              <RequestType 
+                isResponsive="true" 
+                componentName="donutsRegions"
+              />
             </div>
         </div>
         <div class="container">
             <div v-if="isLoaded">
-              <DonutType isResponsive="true"/>
+              <DonutType 
+                isResponsive="true"
+                componentName="donutsRegions"
+              />
             </div>
         </div>
       </div>
@@ -41,6 +47,15 @@ export default {
   computed: {
     isLoaded() {
       return this.$store.getters.getLoaded;
+    },
+    eu1Regions() {
+      return this.$store.getters.getEu1Region;
+    },
+    eu2Regions() {
+      return this.$store.getters.getEu2Region;
+    },
+    euOtherRegions() {
+      return this.$store.getters.getEuOtherRegion;
     }
   },
   methods: {
@@ -48,12 +63,14 @@ export default {
       await axios.post("https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs").then((response) => {
         const data = response.data;
         this.$store.commit('setLogs', data);
-        const numberOfGetRequests = data.filter(log => log.requestType === 'GET').length;
-        const numberOfPostRequests = data.filter(log => log.requestType === 'POST').length;
-        const numberOfPutRequests = data.filter(log => log.requestType === 'PUT').length;
-        this.$store.commit('setNumberOfGetRequests', numberOfGetRequests);
-        this.$store.commit('setNumberOfPostRequests', numberOfPostRequests);
-        this.$store.commit('setNumberOfPutRequests', numberOfPutRequests);
+        const regions_eu_1 = data.filter(log => log.requestRegion === 'eu-central-1').length;
+        const regions_eu_2 = data.filter(log => log.requestRegion === 'eu-central-2').length;
+        const regions_eu_others = data.filter(log => log.requestRegion !== 'eu-central-2' && log.requestRegion !== 'eu-central-1').length;
+
+
+        this.$store.commit('setNumbersOfEu1Regions', regions_eu_1);
+        this.$store.commit('setNumbersOfEu2Regions', regions_eu_2);
+        this.$store.commit('setNumbersOfEuOtherRegions', regions_eu_others);
         this.$store.commit('setLoaded', true);
       }).catch((error) => {
         console.log(error);
@@ -73,6 +90,8 @@ main {
 
 #donuts {
   margin-top: 100px;
+  min-height: 100vh;
+  border-bottom: 2px solid #3ee70a;
 }
 
 #donuts .row {

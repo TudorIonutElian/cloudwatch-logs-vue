@@ -4,6 +4,7 @@
     <LogsTable 
       :isTableVisible="isTableVisible" 
       :isDonutVisible="isDonutVisible"
+      :isDonutRegionsVisible="isDonutRegionsVisible"
     />
   </main>
 </template>
@@ -20,7 +21,8 @@ export default {
   data() {
     return {
       isTableVisible: true,
-      isDonutVisible: false
+      isDonutVisible: false,
+      isDonutRegionsVisible: false
     }
   },
   methods: {
@@ -31,6 +33,10 @@ export default {
       } else if (component === 'Donuts') {
         this.isTableVisible = false;
         this.isDonutVisible = true
+      } else if (component === 'DonutsRegions') {
+        this.isTableVisible = false;
+        this.isDonutVisible = false;
+        this.isDonutRegionsVisible = true;
       }
     }
     
