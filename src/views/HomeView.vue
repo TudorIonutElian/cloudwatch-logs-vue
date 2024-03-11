@@ -19,24 +19,18 @@ export default {
   },
   data() {
     return {
-    }
-  },
-  computed: {
-    isTableVisible() {
-      return this.$store.getters.getIsTableVisible;
-    },
-    isDonutVisible() {
-      return this.$store.getters.getIsDonutVisible;
+      isTableVisible: true,
+      isDonutVisible: false
     }
   },
   methods: {
     setComponent(component) {
       if (component === 'TableLogs') {
-        this.$store.commit('setIsTableVisible', true);
-        this.$store.commit('setIsDonutVisible', false);
+        this.isTableVisible = true;
+        this.isDonutVisible = false;
       } else if (component === 'Donuts') {
-        this.$store.commit('setIsTableVisible', false);
-        this.$store.commit('setIsDonutVisible', true);
+        this.isTableVisible = false;
+        this.isDonutVisible = true
       }
     }
     
