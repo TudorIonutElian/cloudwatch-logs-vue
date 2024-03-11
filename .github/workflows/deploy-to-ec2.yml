@@ -26,6 +26,7 @@ jobs:
             sudo npm run build
             cd /var/www/
             sudo mkdir -p html
+            sudo mv /var/www/cloudwatch-logs-vue/.htaccess  /var/www/dist/
             sudo mv /var/www/cloudwatch-logs-vue/dist/* /var/www/html/
             cd ../
             sudo rm -rf cloudwatch-logs-vue
