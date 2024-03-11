@@ -28,7 +28,7 @@ export default {
         numberOfPutRequests: 0
       },
       chartData: {
-        labels: [ 'eu-central-1', 'eu-central-2', 'other'],
+        labels: this.getLabels(),
         title: 'Requests',
         datasets: this.getDataSets(),
       },
@@ -38,6 +38,13 @@ export default {
     }
   },
   methods: {
+    getLabels() {
+       if (this.componentName === "donutsRegions") {
+        return [ 'eu-central-1', 'eu-central-2', 'other']
+       } else {
+        return [ 'GET', 'POST', 'PUT']
+       }
+    },
     getDataSets() {
       if (this.componentName === "donutsRegions") {
         return [
