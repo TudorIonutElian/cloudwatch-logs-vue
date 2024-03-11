@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" @click="setComponent('TableLogs')">Home Logs</a>
+              <button class="nav-link" @click="setComponent('TableLogs')">Home Log</button>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" @click="setComponent('Donuts')">Donuts</a>
+              <button class="nav-link" @click="setComponent('Donuts')">Donuts</button>
             </li>
           </ul>
         </div>

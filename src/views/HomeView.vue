@@ -39,6 +39,7 @@ export default {
         this.$store.commit('setIsDonutVisible', true);
       }
     }
+    
   }
 }
 </script>
