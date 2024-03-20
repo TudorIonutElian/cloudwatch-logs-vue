@@ -269,7 +269,7 @@ export default {
   methods: {
     async fetchLogs() {
       await axios
-        .post(`https://1drcv9w79l.execute-api.eu-central-1.amazonaws.com/development/logs`)
+        .post('https://1drcv9w79l.execute-api.eu-central-1.amazonaws.com/development/logs')
         .then((response) => {
           const data = response.data
           this.$store.commit('setLogs', data)
