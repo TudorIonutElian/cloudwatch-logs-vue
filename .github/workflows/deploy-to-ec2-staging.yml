@@ -1,0 +1,37 @@
+name: Deploy to ec2 instance STAGING
+
+# Trigger deployment only on push to main branch
+on:
+  push:
+    branches:
+      - staging-environment
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.STAGING_INSTANCE }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /var/www/
+            sudo rm -rf cloudwatch-logs-vue
+            sudo rm -rf /var/www/html/*
+            sudo git clone https://github.com/TudorIonutElian/cloudwatch-logs-vue.git
+            cd cloudwatch-logs-vue
+            sudo git checkout ${{ steps.extract_branch.outputs.branch }}
+            sudo npm install
+            sudo npm run build
+            cd /var/www/
+            sudo mkdir -p html
+            sudo mv /var/www/cloudwatch-logs-vue/.htaccess  /var/www/cloudwatch-logs-vue/dist/
+            sudo mv /var/www/cloudwatch-logs-vue/dist/* /var/www/html/
+            cd ../
+            sudo rm -rf cloudwatch-logs-vue
