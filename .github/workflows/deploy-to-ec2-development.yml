@@ -22,6 +22,7 @@ jobs:
             sudo rm -rf /var/www/html/*
             sudo git clone https://github.com/TudorIonutElian/cloudwatch-logs-vue.git
             cd cloudwatch-logs-vue
+            sudo git checkout development-environment
             sudo npm install
             sudo npm run build
             cd /var/www/
