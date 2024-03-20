@@ -269,7 +269,7 @@ export default {
   methods: {
     async fetchLogs() {
       await axios
-        .post('https://r5zvwg1vrb.execute-api.eu-central-1.amazonaws.com/development/logs')
+        .post(`${process.env.API_LOGS_ENDPOINT}/logs`)
         .then((response) => {
           const data = response.data
           this.$store.commit('setLogs', data)
