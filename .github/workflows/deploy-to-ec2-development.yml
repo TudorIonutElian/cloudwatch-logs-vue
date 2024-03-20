@@ -1,4 +1,4 @@
-name: Deploy to ec2 instance
+name: Deploy to ec2 instance DEVELOPMENT
 
 # Trigger deployment only on push to main branch
 on:
