@@ -9,7 +9,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: ${{ vars.development }}
     steps:
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
@@ -17,6 +16,7 @@ jobs:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          environment: ${{ vars.development }}
           script: |
             cd /var/www/
             sudo rm -rf cloudwatch-logs-vue
