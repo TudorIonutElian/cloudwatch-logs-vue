@@ -32,4 +32,5 @@ jobs:
             sudo mv /var/www/cloudwatch-logs-vue/dist/* /var/www/html/
             cd ../
             sudo rm -rf cloudwatch-logs-vue
-            export default API_LOGS_ENDPOINT=${{vars.API_LOGS_ENDPOINT}}
+          env:
+            API_LOGS_ENDPOINT: ${{ vars.API_LOGS_ENDPOINT }}
